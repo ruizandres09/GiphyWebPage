@@ -8,8 +8,11 @@
     <title>GiphyTastic</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 
 </head>
+
+<input type="text" class="searchtext"><button class="search">Search</button>
 
 <div class="buttonarea">
 
@@ -27,43 +30,69 @@
     //Here i begin with an array representing my topics for the buttons
     //I decided to go with emotions as my basis for topics
 
-    var topics = ["mad", "happy", "sad"]
+    var topics = ["mad", "happy", "sad", "confused"]
 
 
     //here i create topics for all the elements of my array 
     for (let i = 0; i < topics.length; i++) {
         var button = "<button>" + topics[i] + "</button>"
         $(".buttonarea").append(button)
-
     }
+
+    //Here i am trying to get the click listener to take the users input text and add it to the topics array so the it will create a giphy like all the other topics in the array.
+
+   var usertext= $(".search").click(function(){
+        $("searchtext").value
+    });
+console.log(usertext);
 
     //Below i used the example code from the API documentation to test that the API key i recieved works.
     // Once i made sure it worked i edited the limit to 10
 
 
-    var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=mad&api_key=d7Y9puhA2szVbeQTVjgqu3SaSiJ12R4b&limit=10");
+    for (let i=0;i<topics.length;i++){
+    var xhr = $.get("http://api.giphy.com/v1/gifs/search?q="+topics[i]+"&api_key=d7Y9puhA2szVbeQTVjgqu3SaSiJ12R4b&limit=10");
     xhr.done(function (data) {
 
 
         console.log("success got data", data);
 
-// I couldn't figure out how to write all of this in one line so i broke it out into two lines
-// first i hold the url in a variable, then i create a img tag with the source as the variable created previously
+        // I couldn't figure out how to write all of this in one line so i broke it out into two lines
+        // first i hold the url in a variable, then i create a img tag with the source as the variable created previously
         var imgURL = data.data[0].images.original.url
-$(".imagearea").append("<img src='"+imgURL+"'/>"  )
+        $(".imagearea").append("<img src='" + imgURL + "'/>")
 
         // Here i have testing if i have the correct method to call specific items from the response objects
         // I had trouble for a long time understanding why i could not get it to work and it turns out i had to go one layer deper by using ...
         //...by typing data twice.
 
 
-        
-        console.log(imgURL);
-        
-        var pictures=data.data;
-        
 
-    });
+        console.log(imgURL);
+
+        var pictures = data.data;
+
+
+    }); 
+
+
+}
+
+//I wont get to have the app working in time to submit on time but i know what i need to do in order to complete the webpage.
+
+
+//1. I need to add a click listener to the buttons so that a function runs when they are click so the API search runs only then and not at the beginning load of the page. 
+//Also my loop needs to cycle through all the images in the 10 objects returned.
+
+
+//2. i need to store the text that the user inputs once the user hits the search button or the enter key
+// I would do this by assigning the text value to a temporary variable that would be used int the for loop
+
+//3. i need to append the text to the array so the new button gets created.
+
+//4. to get the images returned from the object to be still images first i need to find the static image in the object from the response and direct my imgURL variable to point there instead of the original image URL
+
+//5. i have to add a click lickener on all images so that the image stars to show the imgURL i currently have displace. If i remember i can do this by changing the state fo the giphy.
 
 
 
