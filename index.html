@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head class="buttonarea>
+    <meta charset=" UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GiphyTastic</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<div class="buttonarea">
+
+</div>
+
+<div class="imagearea">
+
+</div>
+
+<body>
+
+</body>
+<script>
+
+    //Here i begin with an array representing my topics for the buttons
+    //I decided to go with emotions as my basis for topics
+
+    var topics = ["mad", "happy", "sad"]
+
+
+    //here i create topics for all the elements of my array 
+    for (let i = 0; i < topics.length; i++) {
+        var button = "<button>" + topics[i] + "</button>"
+        $(".buttonarea").append(button)
+
+    }
+
+    //Below i used the example code from the API documentation to test that the API key i recieved works.
+    // Once i made sure it worked i edited the limit to 10
+
+
+    var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=mad&api_key=d7Y9puhA2szVbeQTVjgqu3SaSiJ12R4b&limit=10");
+    xhr.done(function (data) {
+
+
+        console.log("success got data", data);
+
+// I couldn't figure out how to write all of this in one line so i broke it out into two lines
+// first i hold the url in a variable, then i create a img tag with the source as the variable created previously
+        var imgURL = data.data[0].images.original.url
+$(".imagearea").append("<img src='"+imgURL+"'/>"  )
+
+        // Here i have testing if i have the correct method to call specific items from the response objects
+        // I had trouble for a long time understanding why i could not get it to work and it turns out i had to go one layer deper by using ...
+        //...by typing data twice.
+
+
+        
+        console.log(imgURL);
+        
+        var pictures=data.data;
+        
+
+    });
+
+
+
+
+
+</script>
+
+
+
+</html>
